@@ -54,21 +54,6 @@ def create_version(
         else:
             return p
 
-    # prepare output name
-    if vconfig.is_ml:
-        vconfig.name = vconfig.name_format.format(
-            project=vconfig.project_name,
-            version=vconfig.solutions.suffix,
-            date=datetime.now(),
-        )
-    elif version == 0:
-        vconfig.name = vconfig.project_name
-    else:
-        vconfig.name = vconfig.name_format.format(
-            project=vconfig.project_name, version=version, date=datetime.now()
-        )
-    vconfig.output_dir = vconfig.output_dir / vconfig.name
-
     # merge in version specific config
     vconfig.merge(
         next(
@@ -76,6 +61,22 @@ def create_version(
             dict(),
         )
     )
+    
+    # prepare output name
+    if vconfig.is_ml:
+        vconfig.name = vconfig.name_format.format(
+            project=vconfig.project_name,
+            version=vconfig.solutions.suffix,
+            version_name=vconfig.solutions.suffix,
+            date=datetime.now(),
+        )
+    elif version == 0:
+        vconfig.name = vconfig.project_name
+    else:
+        vconfig.name = vconfig.name_format.format(
+            project=vconfig.project_name, version=version, date=datetime.now(), version_name=vconfig.name
+        )
+    vconfig.output_dir = vconfig.output_dir / vconfig.name
 
     if vconfig.source_dir == vconfig.output_dir:
         logger.warning(
