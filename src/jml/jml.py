@@ -204,7 +204,7 @@ def cli(
     if project_root:
         config["project_root"] = resolve_path(project_root)
     else:
-        if "project_root" in project_config and project_config["project_root"]:
+        if project_config and "project_root" in project_config and project_config["project_root"]:
             config["project_root"] = resolve_path(project_config["project_root"])
         else:
             config["project_root"] = source.parent
@@ -213,7 +213,8 @@ def cli(
     ## load project root config
     config = load_config(project_root, base=config, resolve=True)
     ## load project specific config
-    config.merge(project_config)
+    if project_config:
+        config.merge(project_config)
     ## add cli options to config
     config.merge(load_options_config(options))
 
