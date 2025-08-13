@@ -127,7 +127,7 @@ logger = logging.getLogger("jml")
 
 
 def load_default_config() -> ConfigDict:
-    config_file = importlib.resources.files() / CONFIG_FILE
+    config_file = importlib.resources.files("jml") / CONFIG_FILE
     return load_config(config_file, config_file=None)
 
 
