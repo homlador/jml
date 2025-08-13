@@ -33,11 +33,13 @@ line.prefix = "return"
 
 [[versions]]
 no = 1
-name = "Version_1"
+name = "Version_Eins"
+name_format = "{project}-{version_name}"
 
 [[versions]]
 no = 2
 name = "Version_Zwei"
+name_format = "{project}-{version_name}"
 
 [[files]]
 name = "+libs/junit.jar"
