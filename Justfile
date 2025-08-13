@@ -23,4 +23,4 @@ deploy:
 
 [group('test')]
 test *args:
-  uv run pytest {{ args }}
+  uv run python -m pytest {{ args }}
