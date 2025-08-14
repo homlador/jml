@@ -38,7 +38,7 @@ from .versions import create_solution, create_version
     "--output-dir",
     "--out",
     metavar="OUT",
-    help="Pfad des Zielordners. Standard ist das Verzeichnis in dem IN liegt.",
+    help="Pfad des Zielordners. Standard ist 'jml-out' im Verzeichnis in dem IN liegt.",
     type=click.Path(writable=True, path_type=Path),
 )
 @click.option(
@@ -246,11 +246,14 @@ def cli(
     # prepare source and output_dir
     config["source_dir"] = source
     config["dry_run"] = dry_run
-
-    if not config["output_dir"]:
-        config["output_dir"] = source.parent / __cmdname__
-    output_dir = config["output_dir"] = resolve_path(config["output_dir"])
-
+    
+    if output_dir:
+        output_dir = resolve_path(output_dir)
+    elif config["output_dir"]:
+        output_dir = resolve_path(config["output_dir"])
+    else:
+        output_dir = source.parent / "jml-out"
+    
     if output_dir.is_relative_to(source):
         console.print(
             ":cross_mark: output directory may not be inside the project folder:",
